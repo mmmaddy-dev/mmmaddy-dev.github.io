@@ -210,7 +210,7 @@ function renderAgentPool() {
       }
 
       card.innerHTML = `
-        <img src="images/headshots/${agent.name.toLowerCase()}.png">
+        <img src="valorant-random/images/headshots/${agent.name.toLowerCase()}.png">
 
         <p>${agent.name}</p>
       `;
@@ -413,7 +413,7 @@ function updatePlayerCard(index, agent) {
     slot.querySelector(".player-image");
 
   img.src =
-    `images/full/${agent.name.toLowerCase()}.webp`;
+    `valorant-random/images/full/${agent.name.toLowerCase()}.webp`;
 
   img.classList.remove("hidden");
 
