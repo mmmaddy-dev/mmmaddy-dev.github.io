@@ -260,6 +260,24 @@ button {
   gap: 20px;
 }
 
+.player-name[contenteditable] {
+  displaY: inline-block;
+  cursor: text;
+  border-bottom: 1px solid transparent;
+  border-radius: 2px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.player-name[contenteditable]:hover {
+  border-bottom-color: currentColor;
+}
+
+.player-name[contenteditable]:focus {
+  border-bottom-color: currentColor;
+  opacity: 0.8;
+}
+
 /*
 =========================
    PLAYER CARD
