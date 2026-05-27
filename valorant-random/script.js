@@ -303,53 +303,41 @@ function toggleAgent(agentName) {
 // =====================
 
 function createPlayerSlots() {
-
   const count = Number(playerCountSelect.value);
-
   playersContainer.innerHTML = "";
-
   playerAssignments = [];
 
   for (let i = 0; i < count; i++) {
+    playerAssignments.push({ locked: false, agent: null });
 
-    playerAssignments.push({
-      locked: false,
-      agent: null
-    });
+    const savedName = localStorage.getItem(`playerName_${i}`) || `Player ${i + 1}`;
 
     const slot = document.createElement("div");
     slot.classList.add("player-slot");
-
     slot.innerHTML = `
-      <h3>Player ${i + 1}</h3>
-
+      <h3 class="player-name" contenteditable="true" spellcheck="false">${savedName}</h3>
       <div class="player-image-container">
         <img class="player-image hidden">
       </div>
-
       <h2 class="agent-name">---</h2>
-
-      <button class="lock-btn">
-        Lock
-      </button>
+      <button class="lock-btn">Lock</button>
     `;
 
+    // Save name on edit
+    const nameEl = slot.querySelector(".player-name");
+    nameEl.addEventListener("input", () => {
+      const val = nameEl.textContent.trim();
+      if (val) localStorage.setItem(`playerName_${i}`, val);
+      else localStorage.removeItem(`playerName_${i}`);
+    });
+
+    // Lock button (unchanged)
     const lockBtn = slot.querySelector(".lock-btn");
-
     lockBtn.addEventListener("click", () => {
-
-      playerAssignments[i].locked =
-        !playerAssignments[i].locked;
-
+      playerAssignments[i].locked = !playerAssignments[i].locked;
       lockBtn.classList.toggle("locked");
-
-      if (playerAssignments[i].locked) {
-        lockBtn.textContent = "Locked";
-        slot.classList.add("locked");
-      } else {
-        lockBtn.textContent = "Lock";
-        slot.classList.remove("locked");
-      }
+      lockBtn.textContent = playerAssignments[i].locked ? "Locked" : "Lock";
+      slot.classList.toggle("locked", playerAssignments[i].locked);
     });
 
     playersContainer.appendChild(slot);
